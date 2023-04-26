@@ -1,7 +1,7 @@
 ## setup node 1 and node 2
 
 ```
-virt-install --name pg<n> --vcpus=2 --memory=2048 --cdrom /home/pierre/Downloads/rhel-8.7-x86_64-boot.iso --disk size=20 --os-variant=rhl8.0
+virt-install --name pg<n> --vcpus=2 --memory=2048 --cdrom rhel-8.7-x86_64-boot.iso --disk size=20 --os-variant=rhl8.0
 
 /etc/sysconfig/network-scripts/ifcg-ens3:
 IPADDR=92.168.122.<m>
