@@ -4,6 +4,8 @@
 
 <a href=https://www.crunchydata.com/postgres-tips>PG tips</a>
 
+<a href=https://ardentperf.com/happiness-hints/>Happiness Hints</a>
+
 <a href=https://postgresqlco.nf/doc/en/param/>Browse Parameters Documentation</a>
 
 <a href=https://linuxconfig.org/how-to-create-a-hot-standby-with-postgresql>How to create a hot standby with PostgreSQL</a>
