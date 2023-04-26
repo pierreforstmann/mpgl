@@ -132,7 +132,7 @@ cp: cannot stat '/var/lib/pgsql/archive/00000001.history': No such file or direc
 LOG:  database system is ready to accept connections
 ERROR:  requested starting point 0/9000000 on timeline 1 is not in this server's history
 DETAIL:  This server's history forked from timeline 1 at 0/70003D0.
-
+STATEMENT:  START_REPLICATION 0/9000000 TIMELINE 1
 ```
 
 ## rebuild standby
