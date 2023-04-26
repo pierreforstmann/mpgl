@@ -105,10 +105,10 @@ pg_ctl start
 ```
 LOG:  starting PostgreSQL 14.7 on x86_64-pc-linux-gnu, compiled by gcc (GCC) 8.5.0 20210514 (Red Hat 8.5.0-16), 64-bit
 LOG:  listening on IPv4 address "0.0.0.0", port 5432
-LOG listening on IPv6 address "::", port 5432
+LOG:  listening on IPv6 address "::", port 5432
 LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
 LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
-LOG:  database system was interrupted; last known up at 2023-04-23 10:29:13 EDT
+LOG:  database system was interrupted; last known up at ...
 LOG:  redo starts at 0/D000028
 LOG:  consistent recovery state reached at 0/D000100
 LOG:  redo done at 0/D000100 system usage: CPU: user: 0.00 s, system: 0.00 s, elapsed: 0.00 s
