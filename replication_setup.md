@@ -69,4 +69,50 @@ LOG:  consistent recovery state reached at 0/B000138
 LOG:  database system is ready to accept read-only connections
 LOG:  started streaming WAL from primary at 0/C000000 on timeline 1
 ```
-  
+
+## backup primary
+```
+pg_basebackup -h localhost -p 5432 -X s -U repuser -D backup/HHMM
+```
+
+## create table on primary
+```
+psql
+create table tHH1MM1(x int);
+exit
+```
+
+## backup primary
+```
+pg_basebackup -h localhost -p 5432 -X s -U repuser -D backup/HH2MM2
+```
+
+## drop table on primary
+```
+psql
+drop table tHH1MM1;
+exit
+```
+
+## restore primary
+```
+pg_ctl stop
+cp -r backup/HH2MM2 $PGDATA
+pg_ctl start
+```
+
+## check primary log
+```
+LOG:  starting PostgreSQL 14.7 on x86_64-pc-linux-gnu, compiled by gcc (GCC) 8.5.0 20210514 (Red Hat 8.5.0-16), 64-bit
+LOG:  listening on IPv4 address "0.0.0.0", port 5432
+LOG listening on IPv6 address "::", port 5432
+LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+LOG:  database system was interrupted; last known up at 2023-04-23 10:29:13 EDT
+LOG:  redo starts at 0/D000028
+LOG:  consistent recovery state reached at 0/D000100
+LOG:  redo done at 0/D000100 system usage: CPU: user: 0.00 s, system: 0.00 s, elapsed: 0.00 s
+LOG:  database system is ready to accept connections
+ERROR:  requested starting point 0/F000000 is ahead of the WAL flush position of this server 0/E0000A0
+STATEMENT:  START_REPLICATION 0/F000000 TIMELINE 1
+```
