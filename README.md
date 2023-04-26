@@ -56,5 +56,6 @@ How to Avoid Timeline Errors during Database Switchover Based on Asynchronous St
 <a href=https://big-elephants.com/2015-11/writing-postgres-extensions-part-v/>Writing PG Extensions: Code Organization and Versioning</a>
 <br>
 
+<a href=https://postgres.ai/blog/20220525-common-db-schema-change-mistakes#recommendations>Common DB schema change mistakes</a>
 
 <a href="https://www.postgresql.org/message-id/CAKoxK+6mBXb=LB7pd9ZoT3zJf0EimfVnusFknyZJEeW4X_ZGiA@mail.gmail.com">help with fmgr</a>
