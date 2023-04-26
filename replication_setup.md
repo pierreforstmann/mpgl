@@ -116,3 +116,22 @@ LOG:  database system is ready to accept connections
 ERROR:  requested starting point 0/F000000 is ahead of the WAL flush position of this server 0/E0000A0
 STATEMENT:  START_REPLICATION 0/F000000 TIMELINE 1
 ```
+
+## rebuild standby
+
+```
+pg_ctl stop
+rm -rf $PGDATA
+pg_basebackup -h pg1 -U repuser -X s -D $PGDATA
+touch $PGDATA/standby.signal
+
+
+postgresql.conf:
+listen_addresses='*'
+wal_level=replica
+primary_conninfo = 'host=pg1 port=5432 user=repuser'
+#archive_mode=on
+#"archive_command='cp %p /var/lib/pgsql/archive/%f'
+
+pg_ctl start
+```
