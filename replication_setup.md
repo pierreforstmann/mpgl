@@ -135,3 +135,27 @@ primary_conninfo = 'host=pg1 port=5432 user=repuser'
 
 pg_ctl start
 ```
+
+## check standby log
+```
+LOG:  database system was shut down in recovery at ...
+LOG:  entering standby mode
+LOG:  redo starts at 0/F000028
+LOG:  consistent recovery state reached at 0/10000000
+LOG:  database system is ready to accept read-only connections
+LOG:  started streaming WAL from primary at 0/10000000 on timeline 1
+```
+
+## check replication on primary
+```
+psql
+\x
+select * from pg_stat_replication;
+```
+
+## check replication on standby
+```
+psql
+\x
+select * from pg_stat_wal_receiver;
+```
