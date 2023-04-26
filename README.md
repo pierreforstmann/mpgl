@@ -40,5 +40,13 @@ How to Avoid Timeline Errors during Database Switchover Based on Asynchronous St
 
 <a href=https://peter.eisentraut.org/blog/2023/01/30/postgresql-supply-chain>PG Supply Chain</a>
 
-<a href=https://big-elephants.com/2015-10/writing-postgres-extensions-part-ii/>Writing PG extensions: Types and Operators</a>
-
+<a href=https://big-elephants.com/2015-10/writing-postgres-extensions-part-i/>Writing Postgres Extensions: the Basics</a>
+<br>
+<a href=https://big-elephants.com/2015-10/writing-postgres-extensions-part-ii/>Writing PG Extensions: Types and Operators</a>
+<br>
+<a href=https://big-elephants.com/2015-10/writing-postgres-extensions-part-iii/>Writing PG Extensions: Debugging</a>
+<br>
+<a href=https://big-elephants.com/2015-11/writing-postgres-extensions-part-iv/>Writing PG Extensions: Testing</a>
+<br>
+<a href=https://big-elephants.com/2015-11/writing-postgres-extensions-part-v/>Writing PG Extensions: Code Organization and Versioning</a>
+<br>
