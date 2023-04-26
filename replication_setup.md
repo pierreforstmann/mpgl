@@ -17,14 +17,14 @@ dnf install -y https://download.postgresql.org/pub/repos/yum/reporpms/EL-8-x86_6
 dnf -qy module disable postgresql
 dnf install -y postgresql14-server
 
-/usr/pgsql-14/bin/postgresql-14-setup initdb
-pg_ctl start
-
 ```
 
 ## setup primary
 
 ```
+/usr/pgsql-14/bin/postgresql-14-setup initdb
+pg_ctl start
+
 mkdir /var/lib/pgsql/backup
 mkdir /var/lib/pgsql/archive
 
