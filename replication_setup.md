@@ -37,7 +37,6 @@ alias pc='tail -n 10 $PGDATA/postgresql.conf'
 ## setup primary
 ```
 initdb -k
-pg_ctl start
 
 mkdir /var/lib/pgsql/backup
 mkdir /var/lib/pgsql/archive
