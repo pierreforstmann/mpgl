@@ -102,7 +102,13 @@ psql -c 'select pg_switch_wal();checkpoint';
 pg_ctl stop
 
 #postgresql.conf
+wal_level=replica
+archive_mode=on
+archive_command='cp %p /var/lib/pgsql/archive/%f'
+restore_command='cp /var/lib/pgsql/archive/%f %p'
+listen_addresses='*'
 primary_conninfo='host=pg2 user=repuser'
+
 
 touch $PGDATA/standby.signal
 pg_ctl start
