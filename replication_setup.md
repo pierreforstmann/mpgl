@@ -261,7 +261,7 @@ psql -c 'pg_switch_wal();checkpoint';
 ```
 pg_ctl stop
 
-#comment recovery_target_time and recovery_targe_action in postgresql.conf
+#comment recovery_target_time and recovery_target_action in postgresql.conf
 
 touch $PGDATA/standby.signal
 pg_ctl start
