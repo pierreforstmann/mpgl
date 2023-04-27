@@ -10,7 +10,7 @@ BOOTPROTO=none
 GATEWAY=192.168.122.1
 
 pg2:/etc/sysconfig/network-scripts/ifcg-ens3:
-IPADDR=192.168.122.51
+IPADDR=192.168.122.132
 BOOTPROTO=none
 GATEWAY=192.168.122.1
 
