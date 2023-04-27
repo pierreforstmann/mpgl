@@ -173,8 +173,15 @@ rm -rf $PGDATA
 cp -r backup/1708 $PGDATA
 
 postgresql.conf:
-recovery_target_time='2023-04-26 17:09:30'
+wal_level=replica
+archive_mode=on
+archive_command='cp %p /var/lib/pgsql/archive/%f'
+restore_command='cp /var/lib/pgsql/archive/%f %p'
+listen_addresses='*'
+primary_conninfo='host=pg2 user=repuser'
+recovery_target_time='2023-04-27 13:57:30'
 recovery_target_action=promote
+
 
 touch $PGDATA/recovery.signal
 pg_ctl start
