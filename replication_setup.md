@@ -28,7 +28,7 @@ dnf install -y postgresql14-server
 ## setup primary
 
 ```
-initdb
+initdb -k
 pg_ctl start
 
 mkdir /var/lib/pgsql/backup
