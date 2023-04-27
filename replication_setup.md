@@ -89,16 +89,14 @@ pg_basebackup -h localhost -p 5432 -X s -U repuser -D backup/1708
 psql -c 'create table t1708(x int);'
 ```
 
-## WAL switch
+## WAL switch on primary
 ```
 psql -c 'select pg_switch_wal();'
 ```
 
 ## drop table on primary
 ```
-psql
-drop table t1708;
-exit
+psql -c 'drop table t1708;'
 ```
 
 ## restore primary
