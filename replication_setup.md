@@ -89,7 +89,7 @@ pg_basebackup -h localhost -p 5432 -X s -U repuser -D backup/DDMM
 ```
 psql -c 'pg_switch_wal();checkpoint';
 ```
-## start old primary as standby
+## start old primary as new standby
 ```
 pg_ctl stop
 
@@ -99,12 +99,37 @@ primary_conninfo='host=pg2 user=repuser'
 touch $PGDATA/standby.signal
 pg_ctl start
 ```
-## promote old standby as primary
+## promote old standby as new primary
 ```
 pg_ctl promote
 ```
 # switchback
 
+## backup primary
+```
+pg_basebackup -h localhost -p 5432 -X s -U repuser -D backup/DDMM
+```
+## backup standby
+```
+pg_basebackup -h localhost -p 5432 -X s -U repuser -D backup/DDMM
+```
+## WAL switch and checkpoint on primary
+```
+psql -c 'pg_switch_wal();checkpoint';
+```
+## start old primary as new standby
+```
+pg_ctl stop
+
+# no change in postgresql.conf
+
+touch $PGDATA/standby.signal
+pg_ctl start
+```
+## promote old standby as new primary
+```
+pg_ctl promote
+```
 # restore primary 
 
 ## backup primary
