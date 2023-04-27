@@ -266,7 +266,16 @@ psql -c 'select pg_switch_wal();checkpoint';
 ```
 pg_ctl stop
 
-#comment recovery_target_time and recovery_target_action in postgresql.conf
+# postgresql.conf
+wal_level=replica
+archive_mode=on
+archive_command='cp %p /var/lib/pgsql/archive/%f'
+restore_command='cp /var/lib/pgsql/archive/%f %p'
+listen_addresses='*'
+primary_conninfo='host=pg2 user=repuser'
+#recovery_target_time='2023-04-27 13:23:00'
+#recovery_target_action=promote
+
 
 touch $PGDATA/standby.signal
 pg_ctl start
