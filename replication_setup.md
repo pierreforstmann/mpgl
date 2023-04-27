@@ -68,7 +68,6 @@ archive_command='cp %p /var/lib/pgsql/archive/%f'
 restore_command='cp /var/lib/pgsql/archive/%f %p'
 
 touch $PGDATA/standby.signal
-pg_ctl stop
 pg_ctl start
 ```
 
