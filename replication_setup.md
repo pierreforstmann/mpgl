@@ -206,9 +206,12 @@ touch $PGDATA/standby.signal
 
 
 postgresql.conf:
-listen_addresses='*'
 wal_level=replica
-primary_conninfo = 'host=pg1 port=5432 user=repuser'
+archive_mode=on
+archive_command='cp %p /var/lib/pgsql/archive/%f'
+restore_command='cp /var/lib/pgsql/archive/%f %p'
+listen_addresses='*'
+primary_conninfo='host=pg1 user=repuser'
 #recovery_target_time='2023-04-27 13:23:00'
 #recovery_target_action=promote
 
