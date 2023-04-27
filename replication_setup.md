@@ -75,7 +75,7 @@ LOG:  database system is ready to accept read-only connections
 LOG:  started streaming WAL from primary at 0/C000000 on timeline 1
 ```
 
-# swichover
+# switchover
 
 ## backup primary
 ```
@@ -244,5 +244,31 @@ select * from pg_stat_wal_receiver;
 exitt
 ```
 # switchover
+
+## backup primary
+```
+pg_basebackup -h localhost -p 5432 -X s -U repuser -D backup/DDMM
+```
+## backup standby
+```
+pg_basebackup -h localhost -p 5432 -X s -U repuser -D backup/DDMM
+```
+## WAL switch and checkpoint on primary
+```
+psql -c 'pg_switch_wal();checkpoint';
+```
+## start old primary as standby
+```
+pg_ctl stop
+
+#comment recovery_target_time and recovery_targe_action in postgresql.conf
+
+touch $PGDATA/standby.signal
+pg_ctl start
+```
+## promote old standby as primary
+```
+pg_ctl promote
+```
 
 # switchback
