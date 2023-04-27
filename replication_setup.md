@@ -87,7 +87,7 @@ pg_basebackup -h localhost -p 5432 -X s -U repuser -D backup/DDMM
 ```
 ## WAL switch and checkpoint on primary
 ```
-psql -c 'pg_switch_wal();checkpoint';
+psql -c 'select pg_switch_wal();checkpoint';
 ```
 ## start old primary as new standby
 ```
@@ -115,7 +115,7 @@ pg_basebackup -h localhost -p 5432 -X s -U repuser -D backup/DDMM
 ```
 ## WAL switch and checkpoint on primary
 ```
-psql -c 'pg_switch_wal();checkpoint';
+psql -c 'select pg_switch_wal();checkpoint';
 ```
 ## start old primary as new standby
 ```
@@ -255,7 +255,7 @@ pg_basebackup -h localhost -p 5432 -X s -U repuser -D backup/DDMM
 ```
 ## WAL switch and checkpoint on primary
 ```
-psql -c 'pg_switch_wal();checkpoint';
+psql -c 'select pg_switch_wal();checkpoint';
 ```
 ## start old primary as standby
 ```
@@ -282,7 +282,7 @@ pg_basebackup -h localhost -p 5432 -X s -U repuser -D backup/DDMM
 ```
 ## WAL switch and checkpoint on primary
 ```
-psql -c 'pg_switch_wal();checkpoint';
+psql -c 'select pg_switch_wal();checkpoint';
 ```
 ## start old primary as standby
 ```
