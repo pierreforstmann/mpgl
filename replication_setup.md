@@ -1,10 +1,16 @@
 ## setup node 1 and node 2
 
 ```
-virt-install --name pg<n> --vcpus=2 --memory=2048 --cdrom rhel-8.7-x86_64-boot.iso --disk size=20 --os-variant=rhl8.0
+virt-install --name pg1 --vcpus=2 --memory=2048 --cdrom rhel-8.7-x86_64-boot.iso --disk size=20 --os-variant=rhl8.0
+virt-install --name pg2 --vcpus=2 --memory=2048 --cdrom rhel-8.7-x86_64-boot.iso --disk size=20 --os-variant=rhl8.0
 
-/etc/sysconfig/network-scripts/ifcg-ens3:
-IPADDR=192.168.122.<m>
+pg1:/etc/sysconfig/network-scripts/ifcg-ens3:
+IPADDR=192.168.122.51
+BOOTPROTO=none
+GATEWAY=192.168.122.1
+
+pg2:/etc/sysconfig/network-scripts/ifcg-ens3:
+IPADDR=192.168.122.51
 BOOTPROTO=none
 GATEWAY=192.168.122.1
 
@@ -48,12 +54,18 @@ psql -c 'create user repuser replication';
 ## setup standby
 
 ```
+mkdir /var/lib/pgsql/backup
+mkdir /var/lib/pgsql/archive
+
 pg_basebackup -h pg1 -U repuser -X s -D $PGDATA
 
 postgresql.conf:
 wal_level=replica
 primary_conninfo = 'host=pg1 port=5432 user=repuser'
 listen_addresses='*'
+archive_mode=on
+archive_command='cp %p /var/lib/pgsql/archive/%f'
+restore_command='cp /var/lib/pgsql/archive/%f %p'
 
 touch $PGDATA/standby.signal
 pg_ctl stop
