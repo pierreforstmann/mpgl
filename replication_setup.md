@@ -24,6 +24,15 @@ dnf install -y https://download.postgresql.org/pub/repos/yum/reporpms/EL-8-x86_6
 dnf -qy module disable postgresql
 dnf install -y postgresql14-server
 
+/var/lib/pgsql/.bash_profile:
+PATH=/usr/pgsql-14/bin:$PATH
+#
+alias pl='tail -n 20 $PGDATA/log/pos*'
+alias vc='vi $PGDATA/postgresql.conf'
+alias pc='tail -n 10 $PGDATA/postgresql.conf' 
+
+
+
 ```
 ## setup primary
 ```
