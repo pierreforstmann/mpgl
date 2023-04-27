@@ -1,7 +1,6 @@
 # setup
 
 ## setup node 1 and node 2
-
 ```
 virt-install --name pg1 --vcpus=2 --memory=2048 --cdrom rhel-8.7-x86_64-boot.iso --disk size=20 --os-variant=rhl8.0
 virt-install --name pg2 --vcpus=2 --memory=2048 --cdrom rhel-8.7-x86_64-boot.iso --disk size=20 --os-variant=rhl8.0
@@ -26,9 +25,7 @@ dnf -qy module disable postgresql
 dnf install -y postgresql14-server
 
 ```
-
 ## setup primary
-
 ```
 initdb -k
 pg_ctl start
@@ -51,9 +48,7 @@ pg_ctl start
 psql -c 'create user repuser replication';
 
 ```
-
 ## setup standby
-
 ```
 mkdir /var/lib/pgsql/backup
 mkdir /var/lib/pgsql/archive
@@ -71,7 +66,6 @@ restore_command='cp /var/lib/pgsql/archive/%f %p'
 touch $PGDATA/standby.signal
 pg_ctl start
 ```
-
 ## check standby log
 ```
 LOG:  entering standby mode
@@ -89,7 +83,7 @@ pg_basebackup -h localhost -p 5432 -X s -U repuser -D backup/DDMM
 ```
 ## backup standby
 ```
-pg_basebackup -h localhost -p 5432 -X s -U repuser -D backup/DMM
+pg_basebackup -h localhost -p 5432 -X s -U repuser -D backup/DDMM
 ```
 ## WAL switch and checkpoint on primary
 ```
@@ -109,7 +103,6 @@ pg_ctl start
 ```
 pg_ctl promote
 ```
-
 # switchback
 
 # restore primary 
