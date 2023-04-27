@@ -1,3 +1,5 @@
+# setup
+
 ## setup node 1 and node 2
 
 ```
@@ -79,6 +81,13 @@ LOG:  database system is ready to accept read-only connections
 LOG:  started streaming WAL from primary at 0/C000000 on timeline 1
 ```
 
+# swichover
+
+
+# switchback
+
+# restore primary 
+
 ## backup primary
 ```
 pg_basebackup -h localhost -p 5432 -X s -U repuser -D backup/1708
@@ -143,7 +152,7 @@ DETAIL:  This server's history forked from timeline 1 at 0/70003D0.
 STATEMENT:  START_REPLICATION 0/9000000 TIMELINE 1
 ```
 
-## rebuild standby
+# rebuild standby
 
 ```
 pg_ctl stop
@@ -190,3 +199,6 @@ psql
 select * from pg_stat_wal_receiver;
 exitt
 ```
+# switchover
+
+# switchback
