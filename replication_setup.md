@@ -85,14 +85,6 @@ LOG:  started streaming WAL from primary at 0/C000000 on timeline 1
 
 # switchover
 
-## backup primary
-```
-pg_basebackup -h localhost -p 5432 -X s -U repuser -D backup/DDMM
-```
-## backup standby
-```
-pg_basebackup -h localhost -p 5432 -X s -U repuser -D backup/DDMM
-```
 ## WAL switch and checkpoint on primary
 ```
 psql -c 'select pg_switch_wal();checkpoint';
@@ -119,14 +111,6 @@ pg_ctl promote
 ```
 # switchback
 
-## backup primary
-```
-pg_basebackup -h localhost -p 5432 -X s -U repuser -D backup/DDMM
-```
-## backup standby
-```
-pg_basebackup -h localhost -p 5432 -X s -U repuser -D backup/DDMM
-```
 ## WAL switch and checkpoint on primary
 ```
 psql -c 'select pg_switch_wal();checkpoint';
@@ -271,14 +255,6 @@ exitt
 ```
 # switchover
 
-## backup primary
-```
-pg_basebackup -h localhost -p 5432 -X s -U repuser -D backup/DDMM
-```
-## backup standby
-```
-pg_basebackup -h localhost -p 5432 -X s -U repuser -D backup/DDMM
-```
 ## WAL switch and checkpoint on primary
 ```
 psql -c 'select pg_switch_wal();checkpoint';
@@ -307,14 +283,7 @@ pg_ctl promote
 ```
 
 # switchback
-## backup primary
-```
-pg_basebackup -h localhost -p 5432 -X s -U repuser -D backup/DDMM
-```
-## backup standby
-```
-pg_basebackup -h localhost -p 5432 -X s -U repuser -D backup/DDMM
-```
+
 ## WAL switch and checkpoint on primary
 ```
 psql -c 'select pg_switch_wal();checkpoint';
