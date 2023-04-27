@@ -44,7 +44,6 @@ listen_addresses='*'
 pg_hba.conf:
 host    replication     all             192.168.122.132/24      trust
 
-pg_ctl stop
 pg_ctl start
  
 psql -c 'create user repuser replication';
