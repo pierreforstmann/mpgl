@@ -12,7 +12,7 @@
 
 <a href=https://www.percona.com/blog/how-to-set-up-streaming-replication-in-postgresql-12/>How to Set Up Streaming Replication in PostgreSQL 12</a>
 
-<a href=https://dbaclass.com/article/how-to-do-switchover-in-postgres/>How To Do Switchover in Postgres</a>
+< ahref=https://www.enterprisedb.com/blog/switchoverswitchback-drill-validating-postgres-high-availability> Switchover and switchback</a>
 
 <a href=https://itnext.io/database-operational-excellence-with-postgresql-12-3e7b74737495>barman and repmgr tutorial</a>
 
