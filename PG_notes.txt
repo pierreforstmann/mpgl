@@ -1,0 +1,778 @@
+EDB PG TRAINING (2017)
+======================
+
+=========================
+overall cluster structure
+=========================
+1 cluster = several databases managed by 1 single instance
+1 cluster has:
+- 1 single disk directory 
+- 1 TCP/IP port 
+- background processes
+"initdb" is used to initialize the database cluster storage:
+initdb -D <PGDATA> -U <db superuser name> -W <password> -X <TX log directory>
+
+several schemas in each databases
+(user accounts are different from schemas)
+
+Managing db cluster
+--------------------
+
+- pg_ctl -D <PGDATA> start
+- pg_ctl -D <PGDATA> reload: to apply some configuration parameter changes (or pg_reload_conf())
+- pg_ctl status
+- pg_ctl stop -D <PGDATA> -m [s[f|i]
+(only the cluster can be stoppted: individual databases cannot be stopped)
+s: smart
+f: fast
+i: immediate
+- pgcontroldata [DATADIR] can be used to view the database cluster control information
+(catalog version, current transaction log, last chaeckpoint, etc.)
+
+Connecting to cluster means connecting to a single cluster database
+-------------------------------------------------------------------
+
+- psql -p <port> <database name>
+
+
+The server parameter file
+==========================
+1 per cluster
+parameters are case-insensitive
+stored by default in data directory
+session level parameter can be changed with SET
+some parameters can be changed at user level with ALTER USER
+some parameters can be changed at database level with ALTER DATABASE
+paramters can be changed at cluster level with ALTER SYSTEM
+SHOW command can be used to see current settings
+catalog tables: PG_SETTINGS and PG_FILE_SETTINGS
+ALTER SYSTEM writes the settings to a file called postgresql.auto.conf
+postgresql.auto.conf is always read *last* during server reload/restarts
+parameter can be reset with:
+ALTER SYSTEM SET work_mem = DEFAULT;
+to reset all parameters:
+ALTER SYSTEM RESET ALL;
+
+
+connection settings
+-------------------
+listen_addresses (default localhost)
+port
+max_connections (default 100)
+superuser_reserverd_connections (default 3)
+
+shared_buffers (default 128 MB): size of shared buffer pool for the cluster
+temp_buffers = amout of memory used by each backend for caching temporary table data
+work_mem = amount of memory used for each sort or hash operation before switching to temporary disk files
+maintenance_work_mem (default 64 MB) = amount of memory used by each index or VACUUM
+autovacuum_work_mem (default: -1)
+temp_file_limit = amount of disk space that a session can use for temporary files.
+A transaction attempting to exceed this limit will be canceled. Default is limited.
+
+
+query planner settings
+-----------------------
+
+random_page_cost
+seq_page_cost
+effective_cache_size (default 4GB): used to *estimate* the cost of index scan. Rule of thumb is 75%
+of system memory. (one of the most important parameter for query planner)
+enable_hints
+authentication_timeout (default 1 minute): to complete client authentication
+
+row_security (default=on)
+
+wal_level must to set to "replica" to enable PITR.
+min_wal_size = the wal size to start recylcing he WAL files.
+
+
+cluster error logging
+-----------------------
+
+Default logging location=$PGDATA
+
+log_destination: stderr,csvlog or syslog
+logging_collector=on: to enable corresponding background process
+log_directory:directory where log files are written
+log_rotation_age = automatically rotate logs after this much timme
+loh_rotation_size = automatically rotate logs when they get this big
+
+client_min_messages : minimal severity level of messages sent to client (default NOTICE)
+log_min_messages: minimal severity level of messages sent to server (default WARNING)
+log_min_error_statement : minimal severity of message for which SQL statement is displayed 
+log_min_duration_statement: when a statement runs for at least this long
+it is written to the server log with is duration
+
+log_connections=on : log successfull connections to the server log
+log_disconnections=on : log each time a session disconnects including the duration
+of the session
+log_duration: log duration of each SQL statement
+log_line_prefix: additional details to log with each line (IP address, user name, timestamp, process id, session id,
+transaction id)
+log_statement = to log different kind of statements (DDL/MOD/ALL)
+log_temp_files: log temporary files of this size or larger in KB
+log_checkpoints: logs checkpoints and restarts
+
+background writer primary technique technique is to lower bgwriter_delay (default 200 ms).
+
+search_path = order in which schemas are searched (default "$user", public) if object name is not fully qualified with schema name.
+default_tablespace = name of the tablespace in which objects are created by default (default in $PGDATA/base)
+temp_tablespaces = tablespace names for temporary object creation
+statement_timeout = any statement that takes over the specified number of milliseconds will be aborted
+(default = 0 means no timeout)
+idle_in_transaction_session_timeout = termintes any session with an open transaction that
+has been idle for longer than the specified duration in milliseconds
+
+vacuum (maintenance for data files)
+
+vacuum_cost_delay = the length of time in millseconds that the process will wait when the cost limit is exceeded
+(cost = number of pages to be cleaned) - default in 0ms
+vacuum_cost_page_hist
+vacuum_cost_page_miss
+vacuum_cost_page_dirty
+vaccum_cost_limit
+autovacuum (default on) : whether the autovaccum launcher runs
+log_autovaccum_min_duration (default -1)
+autovacuum_max_workers (default 3)
+autovacuum_work_mem (default -1)
+
+postgresql.conf allows configuration file to be divided in separata files
+usage in postgressql.conf:
+include "filename"
+include_dir "directory name"
+
+
+Creating and Managing Databases
+--------------------------------
+
+Object Hierarchy:
+
+1. Cluster
+2. Users/Groups(Roles): any user can connect to any database
+2. Database
+2. Tablespaces: a database can use any tablespace
+3. Catalogs (dictionary)
+3. Schema
+3. Extensions ("plug-ins")
+4. Table
+4. View
+4. Sequence
+4. Functions
+4. Event Triggers
+
+A database is a named collection of SQL objects.
+It is a collection of schemas and the schemas contain the tables, functions, etc.
+CREATE DATABASE and DROP DATABASEare the related statements.
+
+psql commands
+-------------
+
+psql -U <user> <database name>:
+
+\l : list databases
+or
+select datname from pg_database;
+\db: list of tablespaces
+\du: list of users
+\dt: list of tables (but for which schema : default created schema is "public")
+\dt+: list of tables and table sizes
+\di: list of indexes
+\ds: list of sequences
+\dv: list of views
+\dn: list of schemas
+\c <database> <user> name: to connect to another database
+\h <SQL statement>: displays SQL syntax
+
+To create databases
+-------------------
+
+- binary createdb
+OR
+- CREATE DATABASE SQL statement (must use an existing user account as owner):
+CREATE DATABASE prod OWNER entreprisedb;
+- PUBLIC role is granted by default to all cluster users and CONNECT is granted to PUBLIC:
+REVOKE CONNECT ON DATABASE prod FROM PUBLIC;
+
+Users
+------
+
+Are completely separate from operating system user
+Are global accross a database cluster
+Every connection made to a database must be made with a user account
+
+CREATE USER or CREATE ROLE or createuser binary can be used.
+Only superusers and users with CREATEROLE privilege can create new users
+DROP USER must be used to drop user account.
+
+User profile
+------------
+
+User profile can be used to manage account status and password expiration.
+CREATE PROFILE <name> LIMIT <parameter> <value>;
+CREATE USER <name> PASSWORD '<pwd>' SUPERUSER PROFILE <profile>;
+
+ALTER USER <user> ACCOUNT UNLOCK must be used to unlock user account.
+
+
+Privileges
+----------
+
+- cluster level: granted with CREATE USER or ALTER USER by a superuser. 
+- object level: granted with GRANT command by owner or superuser who has
+been give permission to grant (WITH GRAND OPTION).
+psql: \h GRANT to get entire GRANT syntax.
+Ex:
+GRANT CONNECT ON DATABASE edb TO user1;
+GRANT USAGE ON SCHEMA edbuser TO user1;
+GRANT SELECT, INSERT on edbuser.emp TO user1;
+- REVOKE can be used to revoke object level privilege.
+psql: \h REVOKE to get entire REVOKE syntax.
+
+"SELECT USENAME FROM pg_user" can be used to display cluster user accounts.
+
+PUBLIC ROLE has a lot of privileges by default which is granted by default to all users.
+Best practice :
+REVOKE CONNECT ON DATABASE <DB> FROM public;
+
+
+Schema
+-------
+
+A schema is a logical collection of database objects.
+A schema is always owned by a user (or multiple users).
+Schemas are different from users.
+By default there is a PUBLIC schema (default schema for created objects).
+It is not a good practice to store objects in PUBLIC schema.
+
+Must use CREATE SCHEMA <name> AUTHORIZATION <schema owners> in the current database.
+
+There is  a default schema if the schema name is the same as the connected user name.
+
+If no schema name is given the schema search path (search_path) determines with schemas for matching table name.
+The first schema named in the search path is called the current schema if that named exists.
+SET can be used to change search path in current session:
+SET search_path TO myschema, public;
+Default value: "$user", public => says that default schema name is current user name.
+
+
+Object ownership
+----------------
+
+All entities (including databases and tablespaces except users(?) and roles (?)) are owned by database users.
+The database cluster is only owned by the operating system user having created the database cluster.
+
+
+p-sql
+-----
+
+To connect to a database you need to know hostname, the port number and the user name.
+p-sql is using default values from PGDATABASE, PGHOST, PGPORT and PGUSER.
+Cooresponding p-sql options are: -d, -h, -p, -U
+p-sql --version displays p-sql / PostgresSQL version.
+By default host name default is "localhost", port number 5432 (used when installing),
+user name is current connected OS user name, database name is connected OS user name.
+
+\ commands are meta-commands an are specific to p-sql.
+SQL commands operate on the server side.
+* and ? wildcards are OK for meta-commands.
+By default p-sql translates upper-case strings to lower-case strings.
+
+p-sql -f <filename> will execute the related scripts and exit from p-sql
+p-sql -c <commands> runs one single command and exist from p-sql
+$HOME/.psqlrc is executed at p-sql startup unless -X option is used.
+
+p-sql has command history with Up and Down ara keys.
+<TAB> allows to use auto-completion.
+\s displays the command history
+\s <filename> saves the command history
+\e edits the query buffer and then execute it
+\e FILENAME edits FILENAME and the executes it
+\w FILENAME will save the query buffer to FILENAME
+
+-o FILENAME or \o FILENAME wil send query output (excluding STDERR) to FILENAME
+\o stops spooling
+\g FILENAME executes the buffer query sending output to FILENAME
+\watch can be used to ru preivous query repeatedly
+-q runs quietly (without output)
+
+\set is used to set a p-sql variable (variable substitution with ':' prefix):
+\set city Paris
+\echo :city
+Paris
+\unset is used to delete a variable
+
+p-sql special variables:
+AUTOCOMMMIT
+ENCODING
+HISTFILE
+ON_ERROR_ROLLBACK
+ON_ERROR_STOP
+PROMPT1
+VERBOSITY
+
+By default p-sql runs in AUTOCOMMIT mode.
+This can be turned off with:
+\set AUTOCOMMIT off
+
+\watch can be used to run previous query repeated
+
+Informations commands:
+\di, \ds, \dt, \dv, \db, dS for
+indexes, sequences, tables, views, tablespaces, system objects
+\dvs woks also.
+\d [pattern] can display relation structure detail
++ displays any comments associates with the table columns
+\d+ = \dvs+
+
+\l lists names, owners, character set encodings of all databases server
+\dn lists schemas (namespaces)
+\df lists functions
+\conninfo to get current connection info
+\c connects to a specific database
+\q or ^D to quit
+\cd to change current directory at OS level
+\! [command] executes the specified command
+
+\? to get help
+\h [command] shows SQL command syntax
+\h lists all SQL commands
+
+\du to list users
+
+\ef allows to edit function source code
+
+table <TABLE> runs "select * from < TABLE>"
+
+\t removes SELECT output heading (column names and dashes)
+
+\x displays extended output (vertical mode).
+
+\timing on measures execution time frmo p-sql (including network trips)
+\timing off
+
+\i to execute a SQL script from p-sql
+
+\password allows to change password for the current connected database user.
+
+\? displays all meta-commands.
+
+p-sql -- help display p-sql full option syntax.
+
+
+========
+Security
+========
+
+HBA = Hot Based Access Control.
+pg_hba.conf = Host based access control file
+located in the cluster data directory
+read at startup, any changes required reload
+each record specify connection type, database name, user name, client IP and method of identification
+Authentications methods: trust, reject, d5, password, gss, sspi krb5, ident, peer, parm, ldap; radius, bds or cert.
+Top to bottom read: first matching entry will be applied.
+
+SHOW HBA_FILE to get pg_hba.conf full path name.
+"md5" means password must be used.
+"trust" means password is not used.
+The figure after IP address is the IP address number of bytes that are checked.
+if HBA configuration file is modified "pg_ctl reload" must be run.
+
+pg_ctl reload does not report any error.
+Authentications error messages are reported to client and written to server log and are self-explanatory.
+
+Row level security:
+1. alter the table:
+ALTER TABLE xxx ENABLE ROW LEVEL SECURITY;
+2. crate a security policy
+CREATE POLICY account_managers ON accounts TO managers USING (manager = current_user);
+=> to allow the managers role to view the rows of their accounts
+or
+CREATE POLICY user_policy ON users USING (user=current_user);
+=> to allow all users to view their own row in a user table
+
+application access is controlled by setting in postgresql.conf and pg_hab.conf:
+- listen addresses
+- max_connections
+- super_user_reserved_connections
+- port
+- unix_socked_directory
+- unix_socket_group
+- unix_socket_permissions
+
+==========
+SQL Primer
+==========
+Data types:
+- NUMERIC, INTEGER, SERIAL
+- CHAR, VARCHAR, TEXT
+- TIMESTAMP, DATE, TIME, INTERVAL,
+- BYTEA, BOOL, MONEY, XML; JSON, JSONB
+(CLOB/BLOB/VARCHAR2/NUMBER/XMLTYPE only in EDB Postgres Advanced Server).
+
+\dT displays list of available user-defined types
+"\dT *" all available data types
+\h display all available SQL statements
+\h <command> displays help for SQL <command>
+
+Temporary table is available only in current session and is removed when session ends.
+UNLOGGED means table data cannot be recovered.
+
+Available constraints:
+NOT NULL, CHECK, UNIQUE, PRIMARY KEY, FOREIGN KEY.
+Constraints can de DEFERRABLE or NON DEFERRABLE.
+
+SERIAL data type is automatically generated using a sequence.
+
+ALTER TABLE allows also to change table schema, table ownership 
+and enable/disable table logging.
+
+DROP table removes data, structure and indexes.
+DROP TABLE IF EXISTS <name> can be used.
+CASCADE/RESTRICT with FK related tables (droppding parent table triggers also child table dropping).
+
+Table can also be created using INHERITS clause to clone structure:
+CREATE TABLE tchild() INHERITS (test);
+If parent table structure is modified, child structure is also modified.
+A parent table with inherited childs can only be dropped with CASCADE clause.
+Data written to parent table is not written to child table
+but SELECT displays data from parent *and* child table
+(disabled with SELECT * FROM ONLY <table>).
+Parent row UPDATE will also updated child row if ONLY keyword is not used.
+Parent row DELETE will also delete child row if ONLY keyword is not used.
+
+CREATE TABLE tcopy (LIKE test) allows to copy structure without data
+(no inheritance link).
+
+INSERT can insert multiple rows in a single statement:
+INSERT INTO table VALUES(row 1), (row 2);
+
+select pg_relation_filepath('<table>') retrieves table data file.
+
+UPSERT can be used:
+UPDATE INTO ... 
+ON CONFLICT <column_name> | ON CONSTRAINT <constraint_name> 
+DO NOTHING | DO UPDATE SET ...
+WHERE ...
+
+In AUTOCOMMIT mode, BEGIN must be used to start a transaction
+that must be ended with COMMIT/END or ROLLBACK.
+
+GRANT USAGE ON SCHEMA allows to query schema dictionary (but not schema data).
+
+Materialized views provide a persistent snapshot of view query data (since PG 9.3):
+CREATE MATERIALIZED VIEW, REFRESH MATERIALIZED VIEW, ALTER MATERIALIED VIEW,
+DROP MATERIALIZED VIEW.
+
+Sequences are used to automatically generated integer values that follow a pattern.
+Sequences have name, start point and end point.
+Sequences values can be cached for performance.
+Sequence can be used using CURRVAL and NEXTVAL functions:
+- CURRVAL('<sequence name>')
+- NEXTVAL('<sequence name>')
+OWNER BY clause allows to bind a sequence to a table column.
+CYCLE means sequence restart with minimul value when maximum value is reached.
+ALTER SEQUENCE can be used to modify sequence properties (including renaming
+it and changing schema).
+
+Domain is a data type with optional contraints.
+Domains can be used to create a data type with allows a selected list of values:
+CREATE DOMAIN city as VARCHAR CHECK (VALUE IN ('Edmonton', 'Calgary','Red Deer'));
+CREATE TABLE location (location_id numeric, city city);
+
+
+Single quotes (') or dollar quotes ($$) can be used for string litterals.
+Custom quoting can also be used like '$foo$'.
+By default object names are stored lower case in database dictionary.
+
+All outer joins are supported with non-ANSI and ANSI syntax.
+
+Indexes cab hash indexes, on expressions, partial, block range index
+and SP-Gist.
+
+===================
+Backup and recovery
+===================
+Database SQL dumps are created with pd_dump (text file that takes a database consistent snapshot):
+pg_dump -p 5444 -U enterprisedb -f edbstore.sql edbstore
+.pgpass can store database passwords
+-Ft: tar format
+-Fc: compressed format
+-Fd: directory format
+By default pd_dump contains only schema creation (no database creation).
+To restore pg_dumps format:
+- use psql for plain text format
+- use pg_restore for -Ft/-Fc/-Fd formats
+- -C options for dump/restore to automatically recreate same name databases.
+If there is no error, no output is displayed unless -v or --verbose is used.
+To display directory format export content:
+pg_restore -Fd <directory> -l
+pg_dumpall must be used for a entire cluster backup (only in plain text format).
+pg_dumpall -g exports only global objects (like roles, users, ...)
+
+offline file system level backup:
+- database instance must be shutdown
+- works only at cluster level (single database backup cannot be backed up with file system level backup)
+- all cluster files (tablespaces + wal segments) must be copied
+online file system level backup with continuous archiving:
+- wal_level must be set to "replica"
+- archive_mode must be to "on"
+- archive_command must set in posgresql.conf ("cp %p /home/enterprisedb/arch_dest/%f")
+- pgreceivexlog (since PG 9.2) allows to stream transaction logs frm a running cluster that can be used for PITR
+- running select pg_switch_xlog will force wal switching
+- running ps_start_backup('<some label>')
+- copy database file
+- running ps_end_backup('<some label>')
+OR
+- running pg_base_backup (takes a binary copy of data and use backup modes)
+- requires adding replication entry in pg_hba.conf
+- requires archive_command, archive_mode, max_wal_senders, wal_keep_segments,  wal_level ("replica") parameters
+- ex: pg_base_backup -h localhost -D /home/online_base -X	
+====
+PITR
+====
+- stop the server
+- if you have enough space keep a copy of the data directory and transaction logs
+- remove all directories and files from the cluster data directory
+- restore the database files from file system backup
+- verify the ownership of restored backup directories (must not be root)
+- remove any files present in pg_xlog
+- if you have any unarchived WAL segment files recovered from crashed cluster, copy them into pg_xlog
+- create a recovery command file recovery.conf in the cluster data directory
+- start the server (to start the recovery)
+- upon completion of the recovery process, the server will rename recovery.conf to recovery.done
+- in recovery.conf restore_command specifies how the xlogs are retrieved
+(restore_command = 'cp .../%f "%"')
+- recovery_target_name, recovery_target_time, recovery_target_xid,
+recovery_target_inclusive, recovery_target_timeline, recovery_target_action
+shoud be used to specify PITR (ex: recovery_target_time=<timestamp>)
+- details are in cluster server log
+
+
+====================
+Database maintenance
+====================
+
+Data files become fragmented as data is modified and deleted
+pg_stat_user_tables gives some fragmentation info.
+
+Optimize statistics play a vital role in query planning
+Stored pernantly in catalog tables
+ANALYZE updates the statistics
+pg_class.relname and pgclass.reltuples store row count in dictionary
+pg_class.relpages store number of pages for the relation
+ANALYZE should be run one per day.
+
+Fragmentation happends because an update or delete of a row does not
+immediately remove the row from the disk page
+Eventually this row space becomes obsolete and causes fragmentation and bloating.
+Obsolete rows can be removed or reused using vacuuming
+Helps in shrinking data file size
+Vacuuming can be automated using autovacuum
+VACUUM commands locks table in access exclusive mode
+Long running transactions may block vacuuming thus it should done
+during low usage times
+
+When executed the VACUUM commands
+- can recover or reuse disk space occupied by osbsolete rows
+- updates data statistics
+- updates tghe visibility map which speeds up index-ony scans
+- protects against loss of very old data due to transaction ID wraparound
+The VACUUM command can be run in two modes:
+- VACUUM
+- VACUUM FULL.
+
+VACUUM:
+- remove dead rows and marks the space available for future reuse
+- does not return the space to the operating system
+- space is reclaimed if obsolete rows are at the end of a table
+- does not require table lock
+VACUUM FULL:
+- requires exclusive table lock
+- compacts tables by writing a complete new version of the table file with no dead space
+- takes more time
+- requires extra disk space for the new copy of the table until the operation completes
+
+To display table space usage: SELECT pg_size_pretty(pg_relation_size('<table name>')) ;
+
+It is recommended to run VACUUM every day for tables with large UPDATE/DELETE activity
+so that space is reused otherwise table siez may increase a lot every day with
+reduced performance.
+
+Prevent Transaction ID Wraparound Failures
+- MVCC depends on transaction ID numbers
+- Transaction IDs have limited size (32 bits)
+- A Cluster that runs for a long time (more than 4 billion) would suffer transaction ID wraparound
+- This causes a catastrophic data loss
+- To avoid this every table in the database must be vacuumed at least once for every two
+billion transactions
+
+VACUUM FREEZE will mark rows as frozen
+Postgres reserves a special XID: FrozenTransactionId
+FrozenTransactionsId is always considered older than every normal XID
+VACUUM FREEZE replaces transaction IDs with FrozenTransactionsId thus rows will appear "in the past" and displayed (?)
+parameter vacuum_freeze_min_age controls when a row will be frozen
+VACUUM normally skips page without dead row versions but some rows may need FREEZE
+vacuum_freeze_table_age controls when table must be scanned
+Does prevent Transaction ID Wraparound failures
+
+Each relation has a visibility map which keeps traack of which pages contain only tuples
+stored at <reffilenode>_vm
+Helps vacuum to determine whether pages contain dead rows
+Can used by used by index-ony scans to answer queries
+VACUUM command updates the visibility map
+The visibility map is vastly smaller so can be cached easily
+
+The executable vacuumdb can be used instead of the SQL VACUUM command.
+
+Autovacuuming 
+- is highly recommended
+- it automates execution of VACUUM, FREEZE and ANALYEZ commands (no VACUUM full is run)
+- one launcher and many worker processes (maximum: autovacuum_max_workers)
+- launcher will start one worker within each database every autovacuum_naptime secondes
+- tracks_counts must be set to TRUE as autovaccum depends on statistics
+- temporary tables cannot be accessed by autovacuum
+- SELECT name, setting FROM pg_settings WHERE name like 'autovacuum%' displays
+all autovacuuming parameters.
+vacuum threshold = vacuum base threshold + vaccum scale factor * number of tuples
+(based on number of UPDATE/DELETE)
+analyze threshold = analyze base threshold + analyze scale factor * number of tuples
+(based on number of INSERT/UPDATE/DELETE)
+- autovacuum workers are resource intensise
+- table-by-table autovaccum parameters can be configured for large tables
+with ALTER TABLE or CREATE TABLE (autovacuum_enable, auto_vacuum_threshold)
+
+
+Routine Reindexing
+
+Indexes are stored on data pages and become fragmented over time
+(VACUUM does not work on indexes)
+REINDEX rebuilds an index using the data stored in the index's table
+Time required depends on number of indexes, size of indexes and load on server when running command
+Reindex is needed when an index has become "bloated" (contains many empty or nearly-empty pages)
+or when you have altered a storage parameter (such as fillfactor) for an index
+or when an index built with the CONCURRENTLY opiotn failed, leaving an "invalid"
+index
+A completely empty index page is automatically reused.
+Reindexing must be carried on.
+
+Cluster command
+
+- sort data physically according to the specifie index
+- an ACCESS EXCLUSIVE lock is acquired
+- when some data is accessed frequently and can be grouped using an index LUSTER is helpful
+- CLUSTER lowers disk accesses and speeds up the query when accessing a range of indexed values
+- run ANALYZE afterwards
+
+===================
+Database dictionary
+===================
+
+System catalog schema is created and maintained automatically in pg_catalog schema
+pg_catalog schema is always effectively part of the search_path
+\dS gives listes of pg_tables and view
+- pg_tables
+- pg_constraints
+- pg_indexes
+- pg_trigger
+- pg_views
+- pg_namespaces: for schemas
+- pg_file_settings: contents of server configuration files
+- pg_policy: tables row level security
+- pg_policies: at db level
+
+Functions:
+- current_database, current_schema, inet_client_addr, inet_client_port, 
+inet_server_addr, inet_server_port, pg_postmaster_start_time, version
+- current_user: user for permission checking
+- session_user: normally user who started the session, but superusers can change
+- current_schemas(boolean) returns array of schemas in the search path, optionally
+including implicit schemas
+- current_setting, set_config: return or modify configuration variables
+- pg_cancel_backend: cancel a backend's current query
+- pg_terminate_backend: terminates backend process
+- pg_reload_conf: reload configuration files
+- pg_rotate_logfile: rotate the server's logfile
+- pg_start_backup, pg_stop_backup: used with PITR
+- pg_*_size: disk space used by a tablespace, database, relation or total_relation
+(includes indexes and toasted data)
+- pg_column_size: bytes used to store a particular value
+- pg_size_pretty: convert a raw size (in bytes) to something more human-readable (KB)
+- ps_ls_dir, pg_read_file, ps_stat_file: restricted to superuse use and only on files in the data or log directories
+- pg_blocking_pids(): function to reliably identify which sessions block other sessions
+
+System Information Views
+- pg_stat_activity: details of open connections and running transactions
+- pg_locks: list of current lokcs being held
+- pg_stat_database: details of database
+- pg_stat_user_* : details of tables, indexes and functions
+- pg_stat_archiver : status of archiver process
+- pg_stat_progress_vacuum: provides progress reporting for VACUUM operations
+
+- pg_user: list of cluster user accounts
+- pg_backend_pid(): current process identifier
+- pg_is_in_backup(): 
+- select pg_switch_xlog(): switch transaction log
+- checkpoint (without SELECT: runs checkpoint)
+
+
+============
+COPY command
+============
+
+- COPY TO copies the contents of a table or a query to a file
+- COPY FROM copies from a file to a table
+- The file must be accessible to the server 
+- must be superuser
+Examples:
+- copy customers to '/home/edb/copy/customers.txt';
+- copy customers to '/home/edb/copy/customers.csv' with csv header;
+- copy (select ename, dname from emp join dept using  (deptno)) to '/home/edb/copy/emp';
+
+- CREATE TEMP TABLE empcvs (LIKE emp);
+- COPY empcvs (emno ename, job,sal, comm, hiredata) FROM '/tmp/emp.csv' CSV HEADER;
+- copy cust from '/home/edb/copy/customers.txt';
+- cat employee | psql -c "copy testcopy from stdin;" edbstore
+- copy testcopy from stdin delimeter ',';
+
+- COPY FREEZE: 
+- add rows to a newly created table and freezes them
+- table must be created or truncated in current transaction
+- improves performance of initial bulk load
+- does violate normale rules of MVCC
+
+===========
+TABLESPACES
+===========
+
+Data is stored logically in tablespaces and physically in data files
+Tablespaces: can belong to only 1 database cluster, consist of multiple data files,
+can be used by multiple databases
+Data Files: can belong to only one tablespace, are used to store database objects,
+cannot be shared by multiplle tables (one or more per table).
+2 pre-configured tablespaces:
+- pg_global  => $PGDATA/global (cluster-wide tables and shared system catalogs)
+- pg_default => $PGDATA/base (for databases and relations)
+
+Each user-defined tablespace has a symbolic link inside the $PGDATA/pg_tblspc directory
+The link is named after the tablespace's OID
+The tablespace directory contains a subdirectory named after the PG catalog server version
+Each database has a separate directory
+Tablespaces can be created using the CREATE TABLESPACE command:
+CREATE TABLESPACE tablespace_name [ OWNER user_name ] LOCATION 'directory'
+(the corresponding OS directory must be created manually)
+
+TABLESPACE clause must be used in object creation:
+CREATE TABLE t(x numeric) TABLESPACE fast_tab;
+
+TO get data full path name but with OID:
+SELECT pg_relation_filepath('t');
+
+Server parameters:
+default_tablespace sets default (permanent) tablespace
+temp_tablespaces sets placement of temporary tables, indexes and temporary files 
+(can be a list)
+
+ALTER TABLESPACE can be used to rename a tablespace, change ownership.
+The seq_page_cost and random_page_cost parameters can be altered for a tablespace
+
+DROP TABLESPACE: must be empty.
