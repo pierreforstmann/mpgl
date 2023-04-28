@@ -8,6 +8,8 @@
 
 <a href=https://postgresqlco.nf/doc/en/param/>Browse Parameters Documentation</a>
 
+<a href=https://pgstats.dev> PostgreSQL Observability</a>
+
 <a href=https://linuxconfig.org/how-to-create-a-hot-standby-with-postgresql>How to create a hot standby with PostgreSQL</a>
 
 <a href=https://www.percona.com/blog/how-to-set-up-streaming-replication-in-postgresql-12/>How to Set Up Streaming Replication in PostgreSQL 12</a>
