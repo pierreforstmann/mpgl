@@ -58,7 +58,7 @@ How to Avoid Timeline Errors during Database Switchover Based on Asynchronous St
 
 <a href=https://doxygen.postgresql.org/>doxygen.postgresql.org</a>
 
-<a href=https://github.com/michaelpq> M. Paquier pg_plugins </a>
+<a href=https://github.com/michaelpq/pg_plugins> pg_plugins </a>
 
 <a href=https://www.infoq.com/articles/wonders-of-postgres-logical-decoding-messages/>The Wonders of Postgres Logical Decoding Messages</a>
 
@@ -66,7 +66,7 @@ How to Avoid Timeline Errors during Database Switchover Based on Asynchronous St
 
 <a href=https://peter.eisentraut.org/blog/2023/01/30/postgresql-supply-chain>PG Supply Chain</a>
 
-<a href=https://big-elephants.com/2015-10/writing-postgres-extensions-part-i/>Writing Postgres Extensions: the Basics</a>
+<a href=https://big-elephants.com/2015-10/writing-postgres-extensions-part-i/>Writing PG Extensions: the Basics</a>
 <br>
 <a href=https://big-elephants.com/2015-10/writing-postgres-extensions-part-ii/>Writing PG Extensions: Types and Operators</a>
 <br>
