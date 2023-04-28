@@ -26,7 +26,7 @@ How to Avoid Timeline Errors during Database Switchover Based on Asynchronous St
 <a href=https://gitlab.com/gitlab-com/runbooks>GitLab runbooks</a>
 <br>
 <br>
-<a href=https://www.endpointdev.com/blog/2016/01/postgresql-point-in-time-recovery>PITR: An Unexpected Journey</a>
+<a href=https://www.endpointdev.com/blog/2016/01/postgresql-point-in-time-recovery>PostgreSQL Point-in-time Recovery: An Unexpected Journey</a>
 
 ### HPE Japan books
 <a href=https://h50146.www5.hpe.com/products/software/oe/linux/mainstream/support/lcc/pdf/PostgreSQL_15GA_New_Features_en_20221014-1.pdf>PG 15 New Features</a>
