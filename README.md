@@ -36,7 +36,12 @@ How to Avoid Timeline Errors during Database Switchover Based on Asynchronous St
 
 <a href=https://h50146.www5.hpe.com/products/software/oe/linux/mainstream/support/lcc/pdf/PostgreSQL11NewFeaturesGAen20181022-1.pdf>PG 11 New Features</a>
 
-<a href=https://h50146.www5.hpe.com/products/software/oe/linux/mainstream/support/lcc/pdf/PostgreSQL_Internals_1_for_PostgreSQL96_en_20170211-1.pdf>PG 9.6 internals<a/>
+## Internals
+<a href=https://postgrespro.com/community/books/internals>PostgreSQL 14 Internals</a>
+
+<a href=https://www.interdb.jp/pg/>The Internals of PostgreSQL</a>
+
+<a href=https://h50146.www5.hpe.com/products/software/oe/linux/mainstream/support/lcc/pdf/PostgreSQL_Internals_1_for_PostgreSQL96_en_20170211-1.pdf>PG 9.6 Internals<a/>
 
 
 ## Dev.
