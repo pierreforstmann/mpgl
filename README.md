@@ -54,6 +54,12 @@ How to Avoid Timeline Errors during Database Switchover Based on Asynchronous St
 
 ## Dev.
 
+<a href=https://github.com/postgres/postgres>PG source code</a>
+
+<a href=https://doxygen.postgresql.org/>doxygen.postgresql.org</a>
+
+<a href=https://github.com/michaelpq> M. Paquier pg_plugins </a>
+
 <a href=https://www.infoq.com/articles/wonders-of-postgres-logical-decoding-messages/>The Wonders of Postgres Logical Decoding Messages</a>
 
 <a href=https://dev.to/yugabyte/postgres-query-execution-simple-query-prepared-statement-3kk0> PG query execution: simple query - prepared statement </a>
