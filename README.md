@@ -29,7 +29,7 @@ How to Avoid Timeline Errors during Database Switchover Based on Asynchronous St
 <a href=https://www.endpointdev.com/blog/2016/01/postgresql-point-in-time-recovery>PostgreSQL Point-in-time Recovery: An Unexpected Journey</a>
 <br>
 <br>
-<a href=https://rbranson.medium.com/10-things-i-hate-about-postgresql-20dbab8c2791>10 Things I Have About PostgreSQL</a>
+<a href=https://rbranson.medium.com/10-things-i-hate-about-postgresql-20dbab8c2791>10 Things I Hate About PostgreSQL</a>
 
 ### HPE Japan books
 <a href=https://h50146.www5.hpe.com/products/software/oe/linux/mainstream/support/lcc/pdf/PostgreSQL_15GA_New_Features_en_20221014-1.pdf>PG 15 New Features</a>
