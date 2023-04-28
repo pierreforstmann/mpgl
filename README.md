@@ -79,6 +79,8 @@ How to Avoid Timeline Errors during Database Switchover Based on Asynchronous St
 
 <a href=https://github.com/tvondra/pg_check>pg_check</a>
 
-<a href=https://postgres.ai/blog/20220525-common-db-schema-change-mistakes#recommendations>Common DB schema change mistakes</a>
+<a href=https://github.com/timescale/timescaledb/blob/332dffeebc72cf16afbde802e2f19aead9bd7836/tsl/src/nodes/skip_scan/README.md>
+
+<a href=https://postgres.ai/blog/20220525-common-db-schema-change-mistakes#recommendations>Common DB schema change mistakes</a>timescaledb SkipScan</a>
 
 <a href="https://www.postgresql.org/message-id/CAKoxK+6mBXb=LB7pd9ZoT3zJf0EimfVnusFknyZJEeW4X_ZGiA@mail.gmail.com">help with fmgr</a>
