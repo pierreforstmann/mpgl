@@ -50,7 +50,7 @@ listen_addresses='*'
 log_filename='pg.log'
 primary_slot_name='pg1'
 
-psql -c "alter user postgress password 'postgres'";
+psql -c "alter user postgres password 'postgres'";
 
 pg_hba.conf:
 # TYPE  DATABASE        USER            ADDRESS                 METHOD
