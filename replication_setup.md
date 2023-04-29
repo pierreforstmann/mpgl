@@ -47,13 +47,40 @@ archive_mode=on
 archive_command='cp %p /var/lib/pgsql/archive/%f'
 restore_command='cp /var/lib/pgsql/archive/%f %p'
 listen_addresses='*'
+log_filename='pg.log'
+primary_slot_name='pg1'
+
+psql -c "alter user postgress password 'postgres'";
 
 pg_hba.conf:
+# TYPE  DATABASE        USER            ADDRESS                 METHOD
+# "local" is for Unix domain socket connections only
+local   all             all                                     md5 
+# IPv4 local connections:
+host    all             all             127.0.0.1/32            md5 
+# IPv6 local connections:
+host    all             all             ::1/128                 md5 
+# Allow replication connections from localhost, by a user with the
+# replication privilege.
+local   replication     all                                     trust
+host    replication     all             127.0.0.1/32            trust
+host    replication     all             ::1/128                 trust
+#
 host    replication     all             192.168.122.132/24      trust
+#
+host	postgres	postgres	192.168.122.132/14	md5
+
+.pgpass:
+localhost:5432:postgres:postgres:postgres
+127.0.0.1:5432:postgres:postgres:postgres
+192.168.122.51:5432:postgres:postgres:postgres
+192.168.122.132:5432:postgres:postgres:postgres
 
 pg_ctl start
  
 psql -c 'create user repuser replication';
+psql -c "select pg_create_physical_replication_slot('pg1');"
+
 
 ```
 ## setup standby
@@ -70,6 +97,30 @@ listen_addresses='*'
 archive_mode=on
 archive_command='cp %p /var/lib/pgsql/archive/%f'
 restore_command='cp /var/lib/pgsql/archive/%f %p'
+
+pg_hba.conf:
+# TYPE  DATABASE        USER            ADDRESS                 METHOD
+# "local" is for Unix domain socket connections only
+local   all             all                                     md5 
+# IPv4 local connections:
+host    all             all             127.0.0.1/32            md5 
+# IPv6 local connections:
+host    all             all             ::1/128                 md5 
+# Allow replication connections from localhost, by a user with the
+# replication privilege.
+local   replication     all                                     trust
+host    replication     all             127.0.0.1/32            trust
+host    replication     all             ::1/128                 trust
+#
+host    replication     all             192.168.122.51/24      trust
+#
+host	   postgres	       postgres	       192.168.122.51/14	     md5
+
+.pgpass:
+localhost:5432:postgres:postgres:postgres
+127.0.0.1:5432:postgres:postgres:postgres
+192.168.122.132:5432:postgres:postgres:postgres
+192.168.122.51:5432:postgres:postgres:postgres
 
 touch $PGDATA/standby.signal
 pg_ctl start
