@@ -97,6 +97,7 @@ listen_addresses='*'
 archive_mode=on
 archive_command='cp %p /var/lib/pgsql/archive/%f'
 restore_command='cp /var/lib/pgsql/archive/%f %p'
+primary_slot_name='pg1'
 
 pg_hba.conf:
 # TYPE  DATABASE        USER            ADDRESS                 METHOD
@@ -124,6 +125,9 @@ localhost:5432:postgres:postgres:postgres
 
 touch $PGDATA/standby.signal
 pg_ctl start
+
+psql -c "select pg_create_physical_replication_slot('pg1');"
+
 ```
 ## check standby log
 ```
