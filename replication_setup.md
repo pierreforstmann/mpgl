@@ -27,7 +27,7 @@ dnf install -y postgresql14-server
 /var/lib/pgsql/.bash_profile:
 PATH=/usr/pgsql-14/bin:$PATH
 #
-alias pl='tail -n 20 $PGDATA/log/pos*'
+alias pl='tail -n 20 $PGDATA/log/pg.log'
 alias vc='vi $PGDATA/postgresql.conf'
 alias pc='tail -n 10 $PGDATA/postgresql.conf' 
 
