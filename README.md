@@ -31,7 +31,13 @@ How to Avoid Timeline Errors during Database Switchover Based on Asynchronous St
 <a href=https://www.endpointdev.com/blog/2016/01/postgresql-point-in-time-recovery>PostgreSQL Point-in-time Recovery: An Unexpected Journey</a>
 <br>
 <br>
+<a href=https://gajus.medium.com/lessons-learned-scaling-postgresql-database-to-1-2bn-records-month-edc5449b3067>Lessons learned scaling PostgreSQL database to 1.2bn records/month</a>
+<br>
+<br>
 <a href=https://rbranson.medium.com/10-things-i-hate-about-postgresql-20dbab8c2791>10 Things I Hate About PostgreSQL</a>
+<br>
+<br>
+<a href=https://ottertune.com/blog/the-part-of-postgresql-we-hate-the-most/>The Part of PostgreSQL We Hate the Most</a>
 
 ### HPE Japan books
 <a href=https://h50146.www5.hpe.com/products/software/oe/linux/mainstream/support/lcc/pdf/PostgreSQL_15GA_New_Features_en_20221014-1.pdf>PG 15 New Features</a>
@@ -86,3 +92,6 @@ How to Avoid Timeline Errors during Database Switchover Based on Asynchronous St
 <a href=https://postgres.ai/blog/20220525-common-db-schema-change-mistakes#recommendations>Common DB schema change mistakes</a>
 
 <a href="https://www.postgresql.org/message-id/CAKoxK+6mBXb=LB7pd9ZoT3zJf0EimfVnusFknyZJEeW4X_ZGiA@mail.gmail.com">help with fmgr</a>
+
+<a href=https://robconery.com/>Rob Conery</a>
+
