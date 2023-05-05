@@ -64,7 +64,7 @@ How to Avoid Timeline Errors during Database Switchover Based on Asynchronous St
 
 <a href=https://public.dalibo.com/exports/formation/manuels/formations/dba2/dba2.handout.pdf>DBA2: PG avancé</a>
 
-<a href=https://https://public.dalibo.com/exports/formation/manuels/formations/dba3/dba3.handout.pdf>DBA3: Sauvegardes et Réplication</a>
+<a href=https:///public.dalibo.com/exports/formation/manuels/formations/dba3/dba3.handout.pdf>DBA3: Sauvegardes et Réplication</a>
 
 <a href=https://public.dalibo.com/exports/formation/manuels/formations/hapat/hapat.handout.pdf>HAPAT: Haute Disponibilité avec Patroni</a>
 
