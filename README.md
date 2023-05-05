@@ -111,5 +111,5 @@ How to Avoid Timeline Errors during Database Switchover Based on Asynchronous St
 
 <a href="https://www.postgresql.org/message-id/CAKoxK+6mBXb=LB7pd9ZoT3zJf0EimfVnusFknyZJEeW4X_ZGiA@mail.gmail.com">help with fmgr</a>
 
-<a href=https://robconery.com/>Rob Conery</a>
+<a href=https://robconery.com/>Rob Conery</a> -  <a href=https://bigmachine.io/products/a-curious-moon/>A Curious Moon</a>
 
