@@ -58,6 +58,24 @@ How to Avoid Timeline Errors during Database Switchover Based on Asynchronous St
 <a href=https://h50146.www5.hpe.com/products/software/oe/linux/mainstream/support/lcc/pdf/PostgreSQL_Internals_1_for_PostgreSQL96_en_20170211-1.pdf>PG 9.6 Internals<a/>
 
 
+## Formations Dalibo
+
+<a href=https://public.dalibo.com/exports/formation/manuels/formations/dba1/dba1.handout.pdf>DBA1: PG Administration</a>
+
+<a href=https://public.dalibo.com/exports/formation/manuels/formations/dba2/dba2.handout.pdf>DBA2: PG avancé</a>
+
+<a href=https://https://public.dalibo.com/exports/formation/manuels/formations/dba3/dba3.handout.pdf>DBA3: Sauvegardes et Réplication</a>
+
+<a href=https://public.dalibo.com/exports/formation/manuels/formations/hapat/hapat.handout.pdf>HAPAT: Haute Disponibilité avec Patroni</a>
+
+<a href=https://public.dalibo.com/exports/formation/manuels/formations/perf1/perf1.handout.pdf>PERF1: PG Performances </a>
+
+<a href=https://public.dalibo.com/exports/formation/manuels/formations/perf2/perf2.handout.pdf>PERF2: Indexation et SQL Avancé</a>
+
+<a href=https://public.dalibo.com/exports/formation/manuels/formations/devpg/devpg.handout.pdf>DEVPG: Développer avec PG </a>
+
+
+
 ## Dev.
 
 <a href=https://github.com/postgres/postgres>PG source code</a>
