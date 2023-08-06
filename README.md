@@ -90,6 +90,8 @@ How to Avoid Timeline Errors during Database Switchover Based on Asynchronous St
 
 <a href=https://dev.to/yugabyte/postgres-query-execution-simple-query-prepared-statement-3kk0> PG query execution: simple query - prepared statement </a>
 
+<a href=https://github.com/melanieplageman/debugging_planner> Learning to Hack on Postgres Planner </a>
+
 <a href=https://peter.eisentraut.org/blog/2023/01/30/postgresql-supply-chain>PG Supply Chain</a>
 
 <a href=https://big-elephants.com/2015-10/writing-postgres-extensions-part-i/>Writing PG Extensions: the Basics</a>
