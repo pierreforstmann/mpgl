@@ -38,6 +38,10 @@ How to Avoid Timeline Errors during Database Switchover Based on Asynchronous St
 <br>
 <br>
 <a href=https://ottertune.com/blog/the-part-of-postgresql-we-hate-the-most/>The Part of PostgreSQL We Hate the Most</a>
+<br>
+<br>
+<a href=https://wiki.postgresql.org/wiki/Operations_cheat_sheet>Operations cheat sheet</a>
+
 
 ### HPE Japan books
 <a href=https://h50146.www5.hpe.com/products/software/oe/linux/mainstream/support/lcc/pdf/PostgreSQL_15GA_New_Features_en_20221014-1.pdf>PG 15 New Features</a>
