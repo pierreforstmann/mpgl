@@ -44,6 +44,9 @@ How to Avoid Timeline Errors during Database Switchover Based on Asynchronous St
 
 
 ### HPE Japan books
+
+<a href=https://h50146.www5.hpe.com/products/software/oe/linux/mainstream/support/lcc/pdf/PostgreSQL_17_GA_New_Features_en_20240930_1.pdf> PG 17 New Features</a>
+
 <a href=https://h50146.www5.hpe.com/products/software/oe/linux/mainstream/support/lcc/pdf/PostgreSQL_16_GA_New_Features_en_20230919_1.pdf>PG 16 New Features</a>
 
 <a href=https://h50146.www5.hpe.com/products/software/oe/linux/mainstream/support/lcc/pdf/PostgreSQL_15GA_New_Features_en_20221014-1.pdf>PG 15 New Features</a>
@@ -123,3 +126,4 @@ How to Avoid Timeline Errors during Database Switchover Based on Asynchronous St
 
 <a href=https://robconery.com/>Rob Conery</a> -  <a href=https://bigmachine.io/products/a-curious-moon/>A Curious Moon</a>
 
+<a href=https://dev.to/ashenblade/postgresql-planner-development-and-debugging-47mc> PostgreSQL planner development and debugging </a>
