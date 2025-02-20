@@ -41,6 +41,9 @@ How to Avoid Timeline Errors during Database Switchover Based on Asynchronous St
 <br>
 <br>
 <a href=https://wiki.postgresql.org/wiki/Operations_cheat_sheet>Operations cheat sheet</a>
+<br>
+<br>
+<a href=https://www.adyen.com/knowledge-hub/database-corruption-in-postgresql>Database corruption in PostgreSQL: our journey to improving our upgrade process</a>
 
 
 ### HPE Japan books
