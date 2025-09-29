@@ -46,21 +46,9 @@ How to Avoid Timeline Errors during Database Switchover Based on Asynchronous St
 <a href=https://www.adyen.com/knowledge-hub/database-corruption-in-postgresql>Database corruption in PostgreSQL: our journey to improving our upgrade process</a>
 
 
-### HPE Japan books
+### PostgreSQL new features by Noriyoshi Shinoda 
 
-<a href=https://h50146.www5.hpe.com/products/software/oe/linux/mainstream/support/lcc/pdf/PostgreSQL_17_GA_New_Features_en_20240930_1.pdf> PG 17 New Features</a>
-
-<a href=https://h50146.www5.hpe.com/products/software/oe/linux/mainstream/support/lcc/pdf/PostgreSQL_16_GA_New_Features_en_20230919_1.pdf>PG 16 New Features</a>
-
-<a href=https://h50146.www5.hpe.com/products/software/oe/linux/mainstream/support/lcc/pdf/PostgreSQL_15GA_New_Features_en_20221014-1.pdf>PG 15 New Features</a>
-
-<a href=https://h50146.www5.hpe.com/products/software/oe/linux/mainstream/support/lcc/pdf/PostgreSQL14GA_New_Features_en_20211001-1.pdf>PG 14 New Features</a>
-
-<a href=https://h50146.www5.hpe.com/products/software/oe/linux/mainstream/support/lcc/pdf/PostgreSQL_13_GA_New_Features_en_20200927-1.pdf>PG 13 New Features </a>
-
-<a href=https://h50146.www5.hpe.com/products/software/oe/linux/mainstream/support/lcc/pdf/PostgreSQL_12_GA_New_Features_en_20191011-1.pdf>PG 12 New Features</a>
-
-<a href=https://h50146.www5.hpe.com/products/software/oe/linux/mainstream/support/lcc/pdf/PostgreSQL11NewFeaturesGAen20181022-1.pdf>PG 11 New Features</a>
+<a href=https://github.com/nori-shinoda/documents>list of books</a>
 
 ## Internals
 <a href=https://postgrespro.com/community/books/internals>PostgreSQL 14 Internals</a>
