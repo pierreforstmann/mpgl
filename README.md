@@ -44,7 +44,21 @@ How to Avoid Timeline Errors during Database Switchover Based on Asynchronous St
 <br>
 <br>
 <a href=https://www.adyen.com/knowledge-hub/database-corruption-in-postgresql>Database corruption in PostgreSQL: our journey to improving our upgrade process</a>
+<br>
+<br>
 
+### PostgreSQL for the Oracle DBA by Kellyn Potvin
+<a href=https://dbakevlar.com/2025/06/oracle-dba-to-postgresql-install-and-architecture-part-i/>Part 1: Install and Architecture </a>
+<br>
+<a href=https://dbakevlar.com/2025/06/postgresql-for-the-oracle-dba-part-2-physical-data-structures-storage-and-processes/>Part 2: Physical Data Structures, Storage, and Processes </a>
+<br>
+<a href=https://dbakevlar.com/2025/06/postgresql-for-the-oracle-dba-part-3-transaction-control-locking-and-performance-insight/>Part 3: Transaction Control, Locking, and Performance Insight</a>
+<br>
+<a href=https://dbakevlar.com/2025/06/postgresql-for-the-oracle-dba-part-4-query-tuning-and-the-postgresql-planner/>Part 4: Query Tuning and the PostgreSQL Planner</a>
+<br>
+<a href=https://dbakevlar.com/2025/07/postgresql-for-the-oracle-dba-part-5-understanding-wait-analysis/>Part 5: Understanding Wait Analysis</a>
+<br>
+<a href=https://dbakevlar.com/2025/07/postgresql-for-the-oracle-dba-part-6-tuples-mvcc-and-two-views/>Part 6: Tuples, MVCC, and Two Views </a>
 
 ### PostgreSQL new features by Noriyoshi Shinoda 
 
