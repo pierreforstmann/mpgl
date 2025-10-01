@@ -37,7 +37,7 @@ How to Avoid Timeline Errors during Database Switchover Based on Asynchronous St
 <a href=https://rbranson.medium.com/10-things-i-hate-about-postgresql-20dbab8c2791>10 Things I Hate About PostgreSQL</a>
 <br>
 <br>
-<a href=https://ottertune.com/blog/the-part-of-postgresql-we-hate-the-most/>The Part of PostgreSQL We Hate the Most</a>
+<a href=https://ottertune.com/blog/the-part-of-postgresql-we-hate-the-most/>The Part of PostgreSQL We Hate the Most by Bohan Zhang (now at OpenAI) and Andrew Pavlo (Carnegie Mellon University and Ottertune) </a>
 <br>
 <br>
 <a href=https://wiki.postgresql.org/wiki/Operations_cheat_sheet>Operations cheat sheet</a>
