@@ -60,6 +60,8 @@ How to Avoid Timeline Errors during Database Switchover Based on Asynchronous St
 <br>
 <a href=https://dbakevlar.com/2025/07/postgresql-for-the-oracle-dba-part-6-tuples-mvcc-and-two-views/>Part 6: Tuples, MVCC, and Two Views </a>
 
+<a href=https://www.crunchydata.com/blog/postgres-internals-hiding-in-plain-sight>Postgres Internals Hiding in Plain Sight</a>
+
 ### PostgreSQL new features by Noriyoshi Shinoda 
 
 <a href=https://github.com/nori-shinoda/documents>list of books</a>
