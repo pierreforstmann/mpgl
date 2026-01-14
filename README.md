@@ -46,6 +46,9 @@ How to Avoid Timeline Errors during Database Switchover Based on Asynchronous St
 <a href=https://www.adyen.com/knowledge-hub/database-corruption-in-postgresql>Database corruption in PostgreSQL: our journey to improving our upgrade process</a>
 <br>
 <br>
+<a href=https://haiderzdbre.substack.com/p/10-lessons-from-1000-database-incidents>10 Lessons I Learned After Resolving 1,000+ Database Incidents (Sev-1)</a>
+<br>
+<br>
 
 ### PostgreSQL for the Oracle DBA by Kellyn Potvin
 <a href=https://dbakevlar.com/2025/06/oracle-dba-to-postgresql-install-and-architecture-part-i/>Part 1: Install and Architecture </a>
