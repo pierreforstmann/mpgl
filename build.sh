@@ -25,3 +25,4 @@ rm -rf $PGDATA
 initdb -m oracle
 pg_ctl -D $PGDATA -l logfile start
 createdb ivory
+createuser postgres --superuser
