@@ -11,8 +11,8 @@ set -x
 #
 cd ~/IvorySQL
 make clean
- ./configure --prefix=$TARGET --enable-debug --with-uuid=e2fs
-make
+ ./configure --prefix=$TARGET --enable-debug --with-uuid=e2fs --with-openssl
+make -j
 make check
 make oracle-check
 #
