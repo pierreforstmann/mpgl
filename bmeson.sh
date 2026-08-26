@@ -16,11 +16,12 @@ make distclean
 meson setup build --prefix=$TARGET --buildtype=debug -Dcassert=true -Duuid=e2fs -Dssl=openssl -Dtap_tests=enabled  -Dliburing=enabled
 cd build
 ninja
-meson test
-#
+# 
 rm -rf $TARGET
 mkdir $TARGET 
+#
 ninja install
+ninja install-test-files
 #
 export PATH=$TARGET/bin:$PATH
 #
@@ -34,3 +35,9 @@ echo "log_filename = 'pg.log'" >> $PGDATA/mypg.conf
 echo "include = 'mypg.conf'" >> $PGDATA/postgresql.conf
 #
 pg_ctl -D $PGDATA -l logfile start
+#
+cd ..
+# make check
+meson test -C build --print-errorlogs --suite setup --suite regress
+# make installcheck-world
+meson test -C build -q --print-errorlogs --setup running
