@@ -32,6 +32,8 @@ initdb
 echo "logging_collector = on" > $PGDATA/mypg.conf
 echo "log_directory = 'log'" >> $PGDATA/mypg.conf
 echo "log_filename = 'pg.log'" >> $PGDATA/mypg.conf
+# for sql/twophase 
+echo "max_prepared_transactions = 10" >> $PGDATA/mypg.conf
 echo "include = 'mypg.conf'" >> $PGDATA/postgresql.conf
 #
 pg_ctl -D $PGDATA -l logfile start
