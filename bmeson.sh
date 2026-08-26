@@ -13,7 +13,7 @@ set -x
 #
 rm -rf build
 make distclean
-meson setup build --prefix=$TARGET --buildtype=debug -Dcassert=true -Duuid=e2fs -Dssl=openssl -Dtap_tests=enabled 
+meson setup build --prefix=$TARGET --buildtype=debug -Dcassert=true -Duuid=e2fs -Dssl=openssl -Dtap_tests=enabled  -Dliburing=enabled
 cd build
 ninja
 meson test

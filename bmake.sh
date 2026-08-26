@@ -12,7 +12,7 @@ export TARGET=/var/lib/pgsql/local
 set -x
 #
 make clean
- ./configure --prefix=$TARGET --enable-cassert --enable-debug --with-uuid=e2fs --with-openssl --enable-tap-tests --enable-injection-points
+ ./configure --prefix=$TARGET --enable-cassert --enable-debug --with-uuid=e2fs --with-openssl --enable-tap-tests --enable-injection-points --with-liburing
 make -j
 make check
 #
