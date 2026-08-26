@@ -27,4 +27,10 @@ export PATH=$TARGET/bin:$PATH
 pg_ctl stop
 rm -rf $PGDATA
 initdb 
+#
+echo "logging_collector = on" > $PGDATA/mypg.conf
+echo "log_directory = 'log'" >> $PGDATA/mypg.conf
+echo "log_filename = 'pg.log'" >> $PGDATA/mypg.conf
+echo "include = 'mypg.conf'" >> $PGDATA/postgresql.conf
+#
 pg_ctl -D $PGDATA -l logfile start
