@@ -38,7 +38,7 @@ Create corresponding `t` directory:
 ```
 mkdir src/test/tap/t
 ```
-In ```t``` directory create perl script ```0001_basic_test.pl̀``` :
+In ```t``` directory create perl script ```001_basic_test.pl̀``` :
 
 ```
 use strict;
